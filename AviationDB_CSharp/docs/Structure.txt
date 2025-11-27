@@ -1,0 +1,61 @@
+﻿Cтруктура проекта AviationDB
+
+AviationDB.sln
+├── AviationDB.Core/ (Class Library)
+├── AviationDB.Infrastructure/ (Class Library) 
+└── AviationDB.WPF/ (WPF Application)
+
+1. AviationDB.Core (Модели и интерфейсы)
+
+AviationDB.Core/
+├── Models/
+│   ├── Aircraft.cs
+│   ├── AircraftModel.cs
+│   └── (другие модели)
+├── Repositories/
+│   ├── IAircraftRepository.cs
+│   └── (другие интерфейсы репозиториев)
+└── Common/
+    └── (общие классы)
+
+2. AviationDB.Infrastructure (EF Core и репозитории)
+
+AviationDB.Infrastructure/
+├── Data/
+│   ├── AviationDbContext.cs
+│   └── Configurations/
+│       └── AircraftConfiguration.cs
+├── Repositories/
+│   ├── AircraftRepository.cs
+│   └── (другие репозитории)
+└── Migrations/
+    └── (миграции EF Core)
+
+3. AviationDB.WPF (UI слой)
+
+AviationDB.WPF/
+├── ViewModels/
+│   ├── Base/
+│   │   └── ViewModelBase.cs
+│   ├── AircraftViewModel.cs
+│   └── (другие ViewModels)
+├── Views/
+│   ├── AircraftView.xaml
+│   └── (другие Views)
+├── Services/
+│   └── IDialogService.cs
+└── Converters/
+    └── (конвертеры для привязки)
+
+4. Документация
+
+docs/
+├── CHANGELOG.md          # История изменений
+├── TODO.md               # Планы на будущее
+├── DEVELOPMENT.md        # Как разрабатывать проект
+├── API.md               # Описание API
+├── setup/               # Подпапка для инструкций
+│   ├── installation.md
+│   └── deployment.md
+
+
