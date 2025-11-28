@@ -1,6 +1,5 @@
 ﻿✅ Выполнено
 ❌ Не выполнено
-☑️ Альтернативная галочка
 # Планы
 Разделим реализацию на четкие, последовательные этапы. Это позволит системно подойти к разработке и легко отслеживать прогресс.
 
@@ -8,16 +7,16 @@
 
 1.  **Создание проекта:**
     *   Создать новое WPF-приложение в Visual Studio с именем `AviationDB.WPF`. ✅
-    *   Удалить автоматически созданные `MainWindow.xaml` и `MainWindow.xaml.cs` (мы создадим свои). [ ]
+    *   Удалить автоматически созданные `MainWindow.xaml` и `MainWindow.xaml.cs` (мы создадим свои). ✅
 
 2.  **Установка NuGet пакетов:**
     *   Выполнить в Консоли диспетчера пакетов команды:
-        *   `Install-Package Microsoft.EntityFrameworkCore`
-        *   `Install-Package Npgsql.EntityFrameworkCore.PostgreSQL`
-        *   `Install-Package Microsoft.Extensions.DependencyInjection` (для внедрения зависимостей)
+        *   `Install-Package Microsoft.EntityFrameworkCore`✅
+        *   `Install-Package Npgsql.EntityFrameworkCore.PostgreSQL`✅
+        *   `Install-Package Microsoft.Extensions.DependencyInjection` (для внедрения зависимостей)✅
 
 3.  **Создание структуры папок:**
-    *   В проекте создать папки: `Core`, `Infrastructure`, `ViewModels`, `Views`, `Services`, `docs`.
+    *   В проекте создать папки: `Core`, `Infrastructure`, `ViewModels`, `Views`, `Services`, `docs`.✅
 
 ---
 

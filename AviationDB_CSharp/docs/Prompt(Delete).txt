@@ -1,4 +1,10 @@
-﻿Запрос 1
+﻿Запрос 2
+Выполняем Этап 1: Модели и Контекст данных (Слой Core и Infrastructure)
+Cоздай классы-модели (Entity), которые отражают структуру таблиц в базе данных PostgreSQL Demo.
+Таблицы:aircrafts_data, airports_data, boarding_passes, bookings, flights, seats, spatial_ref_sys, ticket_flights, tickets
+Смотри во вложении создание таблиц
+
+Запрос 1
 Нужно создать программу которая будет подключаться к базе данных PostgreSQL и выводить их на экран. 
 Нужно реализовать к каждой таблице CRUD методы. Стэк технологий C#, EF.Core, WPF. 
 Архитектуру программы MVVM реализуем в одном проекте Структура проекта:
@@ -19,3 +25,4 @@ Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
 Install-Package Microsoft.Extensions.DependencyInjection
 
 Раздели релизацию на этапы. Код писать не надо.
+

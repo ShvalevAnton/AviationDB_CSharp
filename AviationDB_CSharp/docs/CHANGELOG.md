@@ -8,7 +8,7 @@
 
 ## [0.0.1] - 2025-11-28
 ### Added
-- Добавлена структура проекта.
+Добавлена структура проекта.
 <pre>
 AviationDB.WPF/ (ОДИН ПРОЕКТ)
 ├── Core/                           ← Модели и интерфейсы
@@ -25,3 +25,17 @@ AviationDB.WPF/ (ОДИН ПРОЕКТ)
 * Install-Package Microsoft.EntityFrameworkCore
 * Install-Package Npgsql.EntityFrameworkCore.PostgreSQL  
 * Install-Package Microsoft.Extensions.DependencyInjection
+
+### Added
+Добавлены модели БД Demo в папку Core.
+- aircrafts_data.cs, 
+- airports_data.cs, 
+- boarding_passes.cs, 
+- bookings.cs, 
+- flights.cs, 
+- seats.cs, 
+- spatial_ref_sys.cs, 
+- ticket_flights.cs, 
+- tickets.cs.
+
+Добавлена AviationDbContext в папку Infrastructure
