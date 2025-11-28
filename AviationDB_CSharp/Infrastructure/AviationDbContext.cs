@@ -18,7 +18,7 @@ namespace AviationDB_CSharp.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Временная строка подключения для разработки
-            optionsBuilder.UseNpgsql("Host=localhost;Database=demo;Username=postgres;Password=your_password");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=demo;Username=anton;Password=q1");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

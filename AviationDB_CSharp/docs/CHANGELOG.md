@@ -39,3 +39,10 @@ AviationDB.WPF/ (ОДИН ПРОЕКТ)
 - tickets.cs.
 
 Добавлена AviationDbContext в папку Infrastructure
+
+Параметры подключения:
+- Хост: 127.0.0.1
+- Порт: 5432
+- База данных: demo
+- Пользователь: anton
+- Пароль: q1
