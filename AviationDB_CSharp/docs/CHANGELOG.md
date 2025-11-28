@@ -46,3 +46,24 @@ AviationDB.WPF/ (ОДИН ПРОЕКТ)
 - База данных: demo
 - Пользователь: anton
 - Пароль: q1
+
+
+Добавлено интерфейсы репозиториев в папку Core:
+- IAircraftRepositorycs
+- IAirportRepository
+- IBoardingPassRepository
+- IBookingRepository
+- IFlightRepository
+- ISeatRepository
+- ITicketFlightRepository
+- ITicketRepository
+
+В папке Infrastructure добавлены реализации репозиториев:
+- AircraftRepositorycs
+- AirportRepository
+- BoardingPassRepository
+- BookingRepository
+- FlightRepository
+- SeatRepository
+- TicketFlightRepository
+- TicketRepository

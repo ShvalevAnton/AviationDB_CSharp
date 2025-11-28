@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AviationDB.Core
+namespace AviationDB_CSharp.Core
 {
     public interface IBoardingPassRepository
     {
