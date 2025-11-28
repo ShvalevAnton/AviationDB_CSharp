@@ -21,6 +21,6 @@
 └── MainWindow.xaml    
 
 ### Installed
-Install-Package Microsoft.EntityFrameworkCore
-Install-Package Npgsql.EntityFrameworkCore.PostgreSQL  
-Install-Package Microsoft.Extensions.DependencyInjection
+* Install-Package Microsoft.EntityFrameworkCore
+* Install-Package Npgsql.EntityFrameworkCore.PostgreSQL  
+* Install-Package Microsoft.Extensions.DependencyInjection
