@@ -67,3 +67,7 @@ AviationDB.WPF/ (ОДИН ПРОЕКТ)
 - SeatRepository
 - TicketFlightRepository
 - TicketRepository
+
+Создан контейнер сервисов.
+Замечание: Добавил файлы конфигурации appsettings.json (лежит в корне проекта). Не получилоь подключить файл конфигурации к сервису. 
+		   В программе ConfigureServices закомментированные строки. Пока вернул как было.

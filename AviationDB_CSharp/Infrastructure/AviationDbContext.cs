@@ -1,25 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using AviationDB_CSharp.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace AviationDB_CSharp.Infrastructure
 {
     public class AviationDbContext : DbContext
     {
-        public DbSet<AircraftsData> AircraftsData { get; set; }
-        public DbSet<AirportsData> AirportsData { get; set; }
-        public DbSet<Bookings> Bookings { get; set; }
-        public DbSet<Flights> Flights { get; set; }
-        public DbSet<Seats> Seats { get; set; }
-        public DbSet<Tickets> Tickets { get; set; }
-        public DbSet<TicketFlights> TicketFlights { get; set; }
-        public DbSet<BoardingPasses> BoardingPasses { get; set; }
-        public DbSet<SpatialRefSys> SpatialRefSys { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AviationDbContext(DbContextOptions<AviationDbContext> options)
+             : base(options)
         {
-            // Временная строка подключения для разработки
-            optionsBuilder.UseNpgsql("Host=localhost;Database=demo;Username=anton;Password=q1");
         }
+
+        // Убрать метод OnConfiguring, так как конфигурация теперь через DI
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,7 +40,7 @@ namespace AviationDB_CSharp.Infrastructure
                 .HasIndex(bp => new { bp.FlightId, bp.SeatNo })
                 .IsUnique();
 
-            // Настройка проверочных ограничений (CHECK constraints)
+            // Настройка проверочных ограничений
             modelBuilder.Entity<AircraftsData>()
                 .HasCheckConstraint("CK_AircraftsData_Range", "range > 0");
 
@@ -73,5 +65,16 @@ namespace AviationDB_CSharp.Infrastructure
                 .HasForeignKey(f => f.ArrivalAirport)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+
+        // DbSet свойства остаются без изменений
+        public DbSet<AircraftsData> AircraftsData { get; set; }
+        public DbSet<AirportsData> AirportsData { get; set; }
+        public DbSet<Bookings> Bookings { get; set; }
+        public DbSet<Flights> Flights { get; set; }
+        public DbSet<Seats> Seats { get; set; }
+        public DbSet<Tickets> Tickets { get; set; }
+        public DbSet<TicketFlights> TicketFlights { get; set; }
+        public DbSet<BoardingPasses> BoardingPasses { get; set; }
+        public DbSet<SpatialRefSys> SpatialRefSys { get; set; }    
     }
 }
