@@ -1,4 +1,21 @@
 ﻿Запрос 1
 Нужно создать программу которая будет подключаться к базе данных PostgreSQL и выводить их на экран. 
 Нужно реализовать к каждой таблице CRUD методы. Стэк технологий C#, EF.Core, WPF. 
-Архитектуру программы MVVC. Раздели релизацию на этапы. Код писать не надо.
+Архитектуру программы MVVM реализуем в одном проекте Структура проекта:
+- AviationDB.WPF/ (ОДИН ПРОЕКТ)
+├── Core/                           ← Модели и интерфейсы
+├── Infrastructure/                 ← Репозитории и DbContext
+├── ViewModels/                     ← ViewModels
+├── Views/                          ← XAML файлы
+├── Services/                       ← Сервисы (опционально)
+├── docs/                           ← Документация
+├── App.xaml                        ← В корне
+├── App.xaml.cs                     ← В корне
+└── MainWindow.xaml 
+
+Установленные пакеты:
+Install-Package Microsoft.EntityFrameworkCore
+Install-Package Npgsql.EntityFrameworkCore.PostgreSQL  
+Install-Package Microsoft.Extensions.DependencyInjection
+
+Раздели релизацию на этапы. Код писать не надо.
