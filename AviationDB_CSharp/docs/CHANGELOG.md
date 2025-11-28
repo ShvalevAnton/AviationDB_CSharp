@@ -71,3 +71,12 @@ AviationDB.WPF/ (ОДИН ПРОЕКТ)
 Создан контейнер сервисов.
 Замечание: Добавил файлы конфигурации appsettings.json (лежит в корне проекта). Не получилоь подключить файл конфигурации к сервису. 
 		   В программе ConfigureServices закомментированные строки. Пока вернул как было.
+
+Создание ViewModels:
+- ViewModelBase
+- MainViewModel
+- RelayCommand 
+- AircraftViewModel 
+- AirportViewModel
+- FlightViewModel
+- BookingViewModel
