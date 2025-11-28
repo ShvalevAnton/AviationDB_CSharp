@@ -1,0 +1,78 @@
+﻿<Window x:Class="AviationDB_CSharp.Views.AirportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AviationDB_CSharp.Views"
+        mc:Ignorable="d"
+        Title="AirportView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель управления -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <Button Content="Загрузить" Command="{Binding LoadAirportsCommand}" Margin="0,0,10,0"/>
+            <Button Content="Добавить" Command="{Binding AddAirportCommand}" Margin="0,0,10,0"/>
+            <Button Content="Сохранить" Command="{Binding SaveAirportCommand}" Margin="0,0,10,0"/>
+            <Button Content="Удалить" Command="{Binding DeleteAirportCommand}"/>
+        </StackPanel>
+
+        <!-- Список аэропортов -->
+        <DataGrid Grid.Row="1" 
+                  ItemsSource="{Binding Airports}" 
+                  SelectedItem="{Binding SelectedAirport}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Код" Binding="{Binding AirportCode}" Width="60"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding AirportName}" Width="200"/>
+                <DataGridTextColumn Header="Город" Binding="{Binding City}" Width="150"/>
+                <DataGridTextColumn Header="Временная зона" Binding="{Binding Timezone}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Форма редактирования -->
+        <GroupBox Grid.Row="2" Header="Редактирование" Margin="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Код аэропорта:" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EditingAirport.AirportCode, UpdateSourceTrigger=PropertyChanged}" 
+                         MaxLength="3" Margin="5"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Временная зона:" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding EditingAirport.Timezone, UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Название:" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding EditingAirport.AirportName, UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Город:" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding EditingAirport.City, UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="5"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Координаты:" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" 
+                         Text="{Binding EditingAirport.Coordinates, UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="5"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

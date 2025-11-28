@@ -52,10 +52,10 @@ namespace AviationDB_CSharp
             services.AddTransient<AirportViewModel>();
             services.AddTransient<BookingViewModel>();
             services.AddTransient<FlightViewModel>();
-            services.AddTransient<SeatViewModel>();
-            services.AddTransient<TicketViewModel>();
-            services.AddTransient<TicketFlightViewModel>();
-            services.AddTransient<BoardingPassViewModel>();
+            //services.AddTransient<SeatViewModel>();
+            //services.AddTransient<TicketViewModel>();
+            //services.AddTransient<TicketFlightViewModel>();
+            //services.AddTransient<BoardingPassViewModel>();
 
             // Регистрация главного окна
             services.AddSingleton<MainWindow>();

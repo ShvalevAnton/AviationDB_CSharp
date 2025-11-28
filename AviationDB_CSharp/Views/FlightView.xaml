@@ -1,0 +1,99 @@
+﻿<Window x:Class="AviationDB_CSharp.Views.FlightView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AviationDB_CSharp.Views"
+        xmlns:core="clr-namespace:AviationDB_CSharp.Core;assembly=AviationDB_CSharp"
+        mc:Ignorable="d"
+        Title="FlightView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель управления -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <Button Content="Загрузить" Command="{Binding LoadFlightsCommand}" Margin="0,0,10,0"/>
+            <Button Content="Добавить" Command="{Binding AddFlightCommand}" Margin="0,0,10,0"/>
+            <Button Content="Сохранить" Command="{Binding SaveFlightCommand}" Margin="0,0,10,0"/>
+            <Button Content="Удалить" Command="{Binding DeleteFlightCommand}"/>
+        </StackPanel>
+
+        <!-- Список рейсов -->
+        <DataGrid Grid.Row="1" 
+                  ItemsSource="{Binding Flights}" 
+                  SelectedItem="{Binding SelectedFlight}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding FlightNo}" Width="80"/>
+                <DataGridTextColumn Header="Вылет" Binding="{Binding ScheduledDeparture, StringFormat=dd.MM.yyyy HH:mm}" Width="120"/>
+                <DataGridTextColumn Header="Прилет" Binding="{Binding ScheduledArrival, StringFormat=dd.MM.yyyy HH:mm}" Width="120"/>
+                <DataGridTextColumn Header="Откуда" Binding="{Binding DepartureAirport}" Width="60"/>
+                <DataGridTextColumn Header="Куда" Binding="{Binding ArrivalAirport}" Width="60"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+                <DataGridTextColumn Header="Самолет" Binding="{Binding AircraftCode}" Width="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Форма редактирования -->
+        <GroupBox Grid.Row="2" Header="Редактирование" Margin="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Номер рейса:" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EditingFlight.FlightNo, UpdateSourceTrigger=PropertyChanged}" 
+                         MaxLength="6" Margin="5"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Статус:" Margin="5" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="0" Grid.Column="3" 
+                         ItemsSource="{Binding Source={x:Static core:FlightStatuses.AllStatuses}}"
+                         SelectedValue="{Binding EditingFlight.Status}"
+                         Margin="5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Вылет:" Margin="5" VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="1" 
+                           SelectedDate="{Binding EditingFlight.ScheduledDeparture}"
+                           Margin="5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Прилет:" Margin="5" VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="3" 
+                           SelectedDate="{Binding EditingFlight.ScheduledArrival}"
+                           Margin="5"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Аэропорт вылета:" Margin="5" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" 
+                         ItemsSource="{Binding Airports}"
+                         DisplayMemberPath="AirportCode"
+                         SelectedValue="{Binding EditingFlight.DepartureAirport}"
+                         SelectedValuePath="AirportCode"
+                         Margin="5"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Аэропорт прилета:" Margin="5" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="2" Grid.Column="3" 
+                         ItemsSource="{Binding Airports}"
+                         DisplayMemberPath="AirportCode"
+                         SelectedValue="{Binding EditingFlight.ArrivalAirport}"
+                         SelectedValuePath="AirportCode"
+                         Margin="5"/>
+            </Grid>
+        </GroupBox>
+
+
+    </Grid>
+</Window>
