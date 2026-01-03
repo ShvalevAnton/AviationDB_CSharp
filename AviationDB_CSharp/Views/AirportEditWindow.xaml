@@ -1,0 +1,121 @@
+﻿<Window x:Class="AviationDB_CSharp.Views.AirportEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AviationDB_CSharp.Views"
+        mc:Ignorable="d"
+        Title="Редактирование аэропорта" Height="550" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="{Binding WindowTitle}"
+                   FontSize="16" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Код аэропорта -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Код аэропорта*:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="TxtCode"
+                 Text="{Binding AirportCode, UpdateSourceTrigger=PropertyChanged}"
+                 MaxLength="3" IsEnabled="{Binding IsNew}"
+                 Height="30" Margin="0,0,0,10"/>
+
+        <!-- Название (EN) -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Название (EN)*:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="TxtNameEn"
+                 Text="{Binding AirportNameEn, UpdateSourceTrigger=PropertyChanged}"
+                 Height="30" Margin="0,0,0,10"/>
+
+        <!-- Название (RU) -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Название (RU)*:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="TxtNameRu"
+                 Text="{Binding AirportNameRu, UpdateSourceTrigger=PropertyChanged}"
+                 Height="30" Margin="0,0,0,10"/>
+
+        <!-- Город (EN) -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Город (EN)*:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="TxtCityEn"
+                 Text="{Binding CityEn, UpdateSourceTrigger=PropertyChanged}"
+                 Height="30" Margin="0,0,0,10"/>
+
+        <!-- Город (RU) -->
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Город (RU)*:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="TxtCityRu"
+                 Text="{Binding CityRu, UpdateSourceTrigger=PropertyChanged}"
+                 Height="30" Margin="0,0,0,10"/>
+
+        <!-- Координаты -->
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Координаты*:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="TxtLongitude" 
+                     Text="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}"
+                     Width="100" Height="30" Margin="0,0,10,0"
+                     ToolTip="Долгота (например: 37.4145)"/>
+            <TextBox x:Name="TxtLatitude" 
+                     Text="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}"
+                     Width="100" Height="30"
+                     ToolTip="Широта (например: 55.9726)"/>
+        </StackPanel>
+
+        <!-- Часовой пояс -->
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Часовой пояс*:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="CmbTimezone"
+                  SelectedItem="{Binding Timezone, UpdateSourceTrigger=PropertyChanged}"
+                  Height="30" Margin="0,0,0,10"
+                  IsEditable="True">
+            <ComboBoxItem>Europe/Moscow</ComboBoxItem>
+            <ComboBoxItem>Asia/Yekaterinburg</ComboBoxItem>
+            <ComboBoxItem>Europe/London</ComboBoxItem>
+            <ComboBoxItem>America/New_York</ComboBoxItem>
+            <ComboBoxItem>Asia/Tokyo</ComboBoxItem>
+            <ComboBoxItem>Australia/Sydney</ComboBoxItem>
+        </ComboBox>
+
+        <!-- Сообщения об ошибках -->
+        <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
+                   x:Name="TxtError" Foreground="Red" 
+                   TextWrapping="Wrap" Margin="0,10,0,10"/>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2"
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Сохранить" x:Name="BtnSave"
+                    Click="SaveButton_Click"
+                    IsDefault="True"
+                    Width="120" Height="30" Margin="0,0,10,0"
+                    Style="{StaticResource PrimaryButtonStyle}"/>
+            <Button Content="Отмена" 
+                    Click="CancelButton_Click"
+                    IsCancel="True"
+                    Width="100" Height="30"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,0 +1,261 @@
+﻿<Page x:Class="AviationDB_CSharp.Views.AirportsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AviationDB_CSharp.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="900"
+      Title="Аэропорты">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель поиска -->
+        <Border Grid.Row="0" Background="#F5F5F5" Padding="10">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="SearchTextBox" 
+                 Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                 Width="300" Height="30" Padding="5"
+                 VerticalContentAlignment="Center"
+                 ToolTip="Поиск по коду аэропорта (например: SVO)">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+                <Button Content="🔍 Поиск" 
+                Command="{Binding SearchCommand}"
+                Width="100" Height="30" Margin="10,0,0,0"
+                ToolTip="Поиск по коду аэропорта"/>
+
+                <Button Content="🗑️ Очистить" 
+                Click="ClearSearchButton_Click"
+                Width="100" Height="30" Margin="10,0,0,0"
+                ToolTip="Очистить поиск"/>
+
+                <TextBlock Text="Поиск только по коду аэропорта" 
+                   Margin="10,0,0,0" 
+                   VerticalAlignment="Center"
+                   FontStyle="Italic"
+                   Foreground="#666"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Панель инструментов -->
+        <Border Grid.Row="1" Background="#E8E8E8" Padding="10">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="➕ Добавить" 
+                        Click="AddButton_Click"
+                        Style="{StaticResource ToolButtonStyle}" Width="120"/>
+
+                <Button Content="✏️ Редактировать" 
+                        Click="EditButton_Click"
+                        Style="{StaticResource ToolButtonStyle}" Width="120"
+                        IsEnabled="{Binding IsAirportSelected}"/>
+
+                <Button Content="🗑️ Удалить" 
+                        Click="DeleteButton_Click"
+                        Style="{StaticResource ToolButtonStyle}" Width="120"
+                        IsEnabled="{Binding IsAirportSelected}"/>
+
+                <Button Content="🔄 Обновить" 
+                        Command="{Binding LoadAirportsCommand}"
+                        Style="{StaticResource ToolButtonStyle}" Width="120"/>
+
+                <ComboBox x:Name="PageSizeComboBox" 
+                          SelectedValue="{Binding Pagination.PageSize}"
+                          SelectionChanged="PageSizeComboBox_SelectionChanged"
+                          Width="100" Margin="20,0,0,0">
+                    <ComboBoxItem Content="10 записей" Tag="10"/>
+                    <ComboBoxItem Content="20 записей" Tag="20"/>
+                    <ComboBoxItem Content="50 записей" Tag="50"/>
+                    <ComboBoxItem Content="100 записей" Tag="100"/>
+                </ComboBox>
+            </StackPanel>
+        </Border>
+
+        <!-- Список аэропортов -->
+        <DataGrid Grid.Row="2" Margin="10" 
+                  ItemsSource="{Binding Airports}"
+                  SelectedItem="{Binding SelectedAirport}"
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  GridLinesVisibility="Horizontal"
+                  RowHeight="35"
+                  HeadersVisibility="Column">
+
+            <DataGrid.Columns>
+                <!-- Код аэропорта -->
+                <DataGridTextColumn Header="Код" 
+                                    Binding="{Binding AirportCode}" 
+                                    Width="60" 
+                                    ElementStyle="{StaticResource DataGridCellCenterStyle}"/>
+
+                <!-- Название (EN) -->
+                <DataGridTextColumn Header="Название (EN)" 
+                                    Binding="{Binding AirportName, Converter={StaticResource JsonToTextConverter}, ConverterParameter=en}"
+                                    Width="200"/>
+
+                <!-- Название (RU) -->
+                <DataGridTextColumn Header="Название (RU)" 
+                                    Binding="{Binding AirportName, Converter={StaticResource JsonToTextConverter}, ConverterParameter=ru}"
+                                    Width="200"/>
+
+                <!-- Город (EN) -->
+                <DataGridTextColumn Header="Город (EN)" 
+                                    Binding="{Binding City, Converter={StaticResource JsonToTextConverter}, ConverterParameter=en}"
+                                    Width="150"/>
+
+                <!-- Город (RU) -->
+                <DataGridTextColumn Header="Город (RU)" 
+                                    Binding="{Binding City, Converter={StaticResource JsonToTextConverter}, ConverterParameter=ru}"
+                                    Width="150"/>
+
+                <!-- Координаты -->
+                <DataGridTemplateColumn Header="Координаты" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="🌍" Margin="0,0,5,0"/>
+                                <TextBlock>
+                                    <Run Text="{Binding Longitude, StringFormat={}{0:F4}}"/>
+                                    <Run Text=", "/>
+                                    <Run Text="{Binding Latitude, StringFormat={}{0:F4}}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Часовой пояс -->
+                <DataGridTextColumn Header="Часовой пояс" 
+                                    Binding="{Binding Timezone}"
+                                    Width="150"/>
+
+                <!-- Действия -->
+                <DataGridTemplateColumn Header="Действия" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="👁️" 
+                                        ToolTip="Просмотр"
+                                        Click="ViewButton_Click"
+                                        Style="{StaticResource ActionButtonStyle}"/>
+                                <Button Content="✏️" 
+                                        ToolTip="Редактировать"
+                                        Click="EditRowButton_Click"
+                                        Style="{StaticResource ActionButtonStyle}"/>
+                                <Button Content="🗑️" 
+                                        ToolTip="Удалить"
+                                        Click="DeleteRowButton_Click"
+                                        Style="{StaticResource ActionButtonStyle}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#F0F8FF"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#E3F2FD"/>
+                            <Setter Property="BorderBrush" Value="#2196F3"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+
+        <!-- Панель пагинации -->
+        <Border Grid.Row="3" Background="#F5F5F5" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Информация о странице -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Страница:" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding Pagination.CurrentPage}" FontWeight="Bold"/>
+                    <TextBlock Text="из" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding Pagination.TotalPages}" FontWeight="Bold"/>
+                    <TextBlock Text="(" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding Pagination.TotalItems}"/>
+                    <TextBlock Text="записей)" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <!-- Элементы пагинации -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="⏮️" 
+                        Command="{Binding GoToFirstPageCommand}"
+                        IsEnabled="{Binding Pagination.HasPreviousPage}"
+                        Style="{StaticResource PaginationButtonStyle}"
+                        ToolTip="Первая страница"/>
+
+                    <Button Content="◀️" 
+                        Command="{Binding GoToPreviousPageCommand}"
+                        IsEnabled="{Binding Pagination.HasPreviousPage}"
+                        Style="{StaticResource PaginationButtonStyle}"
+                        ToolTip="Предыдущая страница"/>
+
+                    <!-- Отображение текущей страницы -->
+                    <TextBlock Text="{Binding Pagination.CurrentPage}" 
+                        VerticalAlignment="Center" 
+                        Margin="10,0" 
+                        FontWeight="Bold"/>
+                    <TextBlock Text="из" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding Pagination.TotalPages}" 
+                        VerticalAlignment="Center" 
+                        FontWeight="Bold"/>
+
+                    <Button Content="▶️" 
+                        Command="{Binding GoToNextPageCommand}"
+                        IsEnabled="{Binding Pagination.HasNextPage}"
+                        Style="{StaticResource PaginationButtonStyle}"
+                        ToolTip="Следующая страница"/>
+
+                    <Button Content="⏭️" 
+                        Command="{Binding GoToLastPageCommand}"
+                        IsEnabled="{Binding Pagination.HasNextPage}"
+                        Style="{StaticResource PaginationButtonStyle}"
+                        ToolTip="Последняя страница"/>
+                </StackPanel>
+
+                <!-- Переход к странице -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="Перейти к:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox x:Name="GoToPageTextBox" 
+                             Width="50" Height="25" 
+                             VerticalContentAlignment="Center"
+                             TextAlignment="Center">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding GoToPageCommand}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Button Content="Перейти" 
+                            Click="GoToPageButton_Click"
+                            Width="80" Height="25" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+
+    </Grid>
+</Page>

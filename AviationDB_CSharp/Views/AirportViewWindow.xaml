@@ -1,0 +1,112 @@
+﻿<Window x:Class="AviationDB_CSharp.Views.AirportViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AviationDB_CSharp.Views"
+        mc:Ignorable="d"
+        Title="Просмотр аэропорта" Height="500" Width="600"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="Детальная информация об аэропорте"
+                   FontSize="16" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Код аэропорта -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Код аэропорта:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding AirportCode}" 
+                   Margin="0,0,0,10"/>
+
+        <!-- Название (EN) -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Название (EN):" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" 
+                   Text="{Binding AirportName, Converter={StaticResource JsonToTextConverter}, ConverterParameter=en}" 
+                   Margin="0,0,0,10"/>
+
+        <!-- Название (RU) -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Название (RU):" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" 
+                   Text="{Binding AirportName, Converter={StaticResource JsonToTextConverter}, ConverterParameter=ru}" 
+                   Margin="0,0,0,10"/>
+
+        <!-- Город (EN) -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Город (EN):" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" 
+                   Text="{Binding City, Converter={StaticResource JsonToTextConverter}, ConverterParameter=en}" 
+                   Margin="0,0,0,10"/>
+
+        <!-- Город (RU) -->
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Город (RU):" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" 
+                   Text="{Binding City, Converter={StaticResource JsonToTextConverter}, ConverterParameter=ru}" 
+                   Margin="0,0,0,10"/>
+
+        <!-- Координаты -->
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Координаты:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Долгота: "/>
+            <TextBlock Text="{Binding Longitude, StringFormat={}{0:F6}}" FontWeight="Bold"/>
+            <TextBlock Text="°, Широта: "/>
+            <TextBlock Text="{Binding Latitude, StringFormat={}{0:F6}}" FontWeight="Bold"/>
+            <TextBlock Text="°"/>
+        </StackPanel>
+
+        <!-- Часовой пояс -->
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Часовой пояс:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Timezone}" 
+                   Margin="0,0,0,10"/>
+
+        <!-- Карта (заглушка) -->
+        <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
+                BorderBrush="#CCCCCC" BorderThickness="1" 
+                Background="#F9F9F9" Margin="0,10,0,20"
+                CornerRadius="5">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="🗺️" FontSize="40" HorizontalAlignment="Center"/>
+                <TextBlock Text="Карта расположения аэропорта" 
+                           Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding CoordinatesText}" 
+                           HorizontalAlignment="Center" FontStyle="Italic"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2"
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Редактировать" 
+                    Click="EditButton_Click"
+                    Width="120" Height="30" Margin="0,0,10,0"
+                    Style="{StaticResource PrimaryButtonStyle}"/>
+            <Button Content="Закрыть" 
+                    Click="CloseButton_Click"
+                    Width="100" Height="30"/>
+        </StackPanel>
+    </Grid>
+</Window>

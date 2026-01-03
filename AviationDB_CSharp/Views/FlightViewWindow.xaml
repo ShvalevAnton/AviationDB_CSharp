@@ -1,0 +1,149 @@
+﻿<Window x:Class="AviationDB_CSharp.Views.FlightViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Просмотр рейса" 
+        Height="500" 
+        Width="550"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="Детальная информация о рейсе"
+                   FontSize="16" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Номер рейса:" 
+                   FontWeight="Bold" Margin="0,0,10,15"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FlightNo}" 
+                   FontSize="14" FontWeight="Bold" Foreground="#2196F3"
+                   Margin="0,0,0,15"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Маршрут:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="{Binding DepartureAirport}" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text=" → " Margin="10,0" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text="{Binding ArrivalAirport}" FontWeight="Bold" FontSize="16"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Запланированный вылет:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" 
+                   Text="{Binding FormattedScheduledDeparture}"
+                   FontSize="14" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Запланированный прилет:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" 
+                   Text="{Binding FormattedScheduledArrival}"
+                   FontSize="14" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Продолжительность:" 
+                   FontWeight="Bold" Margin="0,0,10,10"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" 
+                   Text="{Binding FormattedDuration}"
+                   FontSize="14" Margin="0,0,0,10"/>
+
+        <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                BorderBrush="#E0E0E0" BorderThickness="1" 
+                Background="#F9F9F9" Margin="0,20,0,20"
+                CornerRadius="5" Padding="15">
+            <StackPanel>
+                <TextBlock Text="📊 Детали рейса" 
+                           FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="Статус:" Width="120"/>
+                    <TextBlock Text="{Binding Status}" FontWeight="Bold" Margin="5,0,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Status}" Value="On Time">
+                                        <Setter Property="Foreground" Value="Green"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Status}" Value="Delayed">
+                                        <Setter Property="Foreground" Value="Orange"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Status}" Value="Departed">
+                                        <Setter Property="Foreground" Value="Blue"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Status}" Value="Arrived">
+                                        <Setter Property="Foreground" Value="DarkGreen"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Status}" Value="Cancelled">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="Самолет:" Width="120"/>
+                    <TextBlock Text="{Binding AircraftCode}" FontWeight="Bold" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="Фактический вылет:" Width="120"/>
+                    <TextBlock Text="{Binding FormattedActualDeparture}" FontWeight="Bold" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Фактический прилет:" Width="120"/>
+                    <TextBlock Text="{Binding FormattedActualArrival}" FontWeight="Bold" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <Separator Margin="0,10,0,10"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="ID рейса:" Width="120"/>
+                    <TextBlock Text="{Binding FlightId}" FontWeight="Bold" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="Аэропорт вылета:" Width="120"/>
+                    <TextBlock Text="{Binding DepartureAirport}" FontWeight="Bold" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Аэропорт прилета:" Width="120"/>
+                    <TextBlock Text="{Binding ArrivalAirport}" FontWeight="Bold" Margin="5,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Редактировать" 
+                    Click="EditButton_Click"
+                    Width="120" Height="30" Margin="0,0,10,0"
+                    Background="#2196F3"
+                    Foreground="White"
+                    FontWeight="Bold"/>
+            <Button Content="Закрыть" 
+                    Click="CloseButton_Click"
+                    Width="100" Height="30"/>
+        </StackPanel>
+    </Grid>
+</Window>
